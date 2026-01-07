@@ -31,12 +31,12 @@ async function getformuser(id) {
     }finally{conn.release()}
 }
 
-async function insertresult(form_id,id,selfscore) {
+async function insertresult(form_id,id,selfscore,sum_id) {
     let conn = await pool.getConnection()
     try{
         const row = await conn.query(
-            "INSERT INTO result (form_id,user_id,selfscore) VALUES (?,?,?)",
-            [form_id,id,selfscore]
+            "INSERT INTO result (form_id,user_id,selfscore,sum_id) VALUES (?,?,?,?)",
+            [form_id,id,selfscore,sum_id]
         )
         return row.affectedRows || null
     }catch(e){

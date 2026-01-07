@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 const user = require('../model/user_model')
 const dotenv = require('dotenv')
+const { json } = require('express')
 
 
 exports.getformuser = async (req,res) => {
@@ -29,16 +30,16 @@ exports.insertresult = async (req,res) => {
     const {id} = req.params
     try{
         const {score,sum} = req.body
-        console.log(req.file)
-        console.log(req.body)
+        const score1 = JSON.parse(score)
+        const file = req.file
         let row = null
-        const row2 = await user.summary(id,sum,req.file.filename)
-        console.log(row2)
-        if(row2 = null) return res.status(400).json({message: "insert failed"})
-        for (item of score){
-            row = await user.insertresult(item.form_id,id,item.score)
+        const row2 = await user.summary(id,sum,file.filename)
+        if(row2 == null) return res.status(400).json({message: "insert failed"})
+        for (item of score1){
+            console.log(item)
+            row = await user.insertresult(item.form_id,id,item.score,row2.insertId)
         }
-        if(row = null) return res.status(400).json({message: "insert failed"})
+        if(row == null) return res.status(400).json({message: "insert failed"})
         res.status(200).json({message: "success"})
     }catch(e){
         console.log(e)
