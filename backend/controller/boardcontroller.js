@@ -33,16 +33,15 @@ exports.insertresult = async (req,res) => {
     const {id} = req.params
     console.log(req.body)
     try{
-        const {score,sum} = req.body
-        console.log(req.file)
+        const {score,sum,comment} = req.body
         console.log(req.body)
-        let i = null
+        let row = null
+        const row2 = await board.summary(id,sum,comment,score[0].user_id)
+        if(!row2) return res.status(400).json({message: "insert failed"})
         for (item of score){
-            i = item.user_id
             const row = await board.insertresult(id,item.score,item.form_id,item.user_id)
-            if(!row) return res.status(400).json({message: "insert failed"})
         }
-        const row2 = await board.summary(id,sum,i)
+        if(row = null) return res.status(400).json({message: "insert failed"})
         res.status(200).json({message:"success"})
     }catch(e){
         console.log(e)

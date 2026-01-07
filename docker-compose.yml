@@ -7,10 +7,9 @@ services:
     - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: asdf
-      MYSQL_USER: root
       MYSQL_PASSWORD: asdf
     volumes:
-      - ./backend/db:/var/lib/mysql
+      - db:/var/lib/mysql
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
@@ -24,4 +23,4 @@ services:
     depends_on:
       - mariadb
 volumes:
-  mariadb:
+  db:

@@ -45,12 +45,12 @@ async function regis(username,password,czid,birthday,department,position,level,g
     }finally{conn.release()}
 }
 
-async function login(gmail,password,role) {
+async function login(gmail,password) {
     let conn = await pool.getConnection()
     try{
         const row = await conn.query(
-            'SELECT * FROM users WHERE gmail = ? AND password = ? AND role = ?',
-            [gmail,password,role]
+            'SELECT * FROM users WHERE gmail = ? AND password = ?',
+            [gmail,password]
         )
         return row[0] || null
     }catch(e){

@@ -58,7 +58,7 @@ async function getuser(id) {
     }finally{conn.release()}
 }
 
-async function insertresult(board_id,boardscore,form_id,user_id,sum) {
+async function insertresult(board_id,boardscore,form_id,user_id) {
     let conn = await pool.getConnection()
     try{
         const row = await conn.query(
@@ -76,12 +76,12 @@ async function insertresult(board_id,boardscore,form_id,user_id,sum) {
     }finally{conn.release()}
 }
 
-async function summary(id,sum,user_id) {
+async function summary(id,sum,comment,user_id) {
     let conn = await pool.getConnection()
     try{
         const row2 = await conn.query(
-            "UPDATE summary SET board_id = ? , board_sum = ? WHERE user_id = ?",
-            [id,sum,user_id]
+            "UPDATE summary SET board_id = ? , board_sum = ? , board_comment = ? WHERE user_id = ?",
+            [id,sum,comment,user_id]
         )
         return row2
     }catch(e){

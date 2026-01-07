@@ -32,12 +32,13 @@ exports.insertresult = async (req,res) => {
         console.log(req.file)
         console.log(req.body)
         let row = null
+        const row2 = await user.summary(id,sum,req.file.filename)
+        console.log(row2)
+        if(row2 = null) return res.status(400).json({message: "insert failed"})
         for (item of score){
-            row = await user.insertresult(item.form_id,id,item.score,null)
+            row = await user.insertresult(item.form_id,id,item.score)
         }
         if(row = null) return res.status(400).json({message: "insert failed"})
-        const row2 = await user.summary(id,sum)
-        if(row2 = null) return res.status(400).json({message: "insert failed"})
         res.status(200).json({message: "success"})
     }catch(e){
         console.log(e)

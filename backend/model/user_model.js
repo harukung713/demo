@@ -31,12 +31,12 @@ async function getformuser(id) {
     }finally{conn.release()}
 }
 
-async function insertresult(form_id,id,selfscore,file) {
+async function insertresult(form_id,id,selfscore) {
     let conn = await pool.getConnection()
     try{
         const row = await conn.query(
-            "INSERT INTO result (form_id,user_id,selfscore,attachment) VALUES (?,?,?,?)",
-            [form_id,id,selfscore,file]
+            "INSERT INTO result (form_id,user_id,selfscore) VALUES (?,?,?)",
+            [form_id,id,selfscore]
         )
         return row.affectedRows || null
     }catch(e){
@@ -44,12 +44,12 @@ async function insertresult(form_id,id,selfscore,file) {
         res.status(500).json({message: "ERROR getformuser"})
     }finally{conn.release()}
 }
-async function summary(id,sum) {
+async function summary(id,sum,file) {
     let conn = await pool.getConnection()
     try{
         const row2 = await conn.query(
-            "INSERT INTO summary (user_id,user_sum) VALUES (?,?)",
-            [id,sum]
+            "INSERT INTO summary (user_id,user_sum,user_attachment) VALUES (?,?,?)",
+            [id,sum,file]
         )
         return row2
     }catch(e){
