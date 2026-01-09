@@ -96,7 +96,7 @@ async function getformdata() {
             `SELECT
             i.indicator_id,
             f.form_id,
-            f.detail
+            f.form
             FROM indicator i 
             JOIN form f ON f.indicator_id = i.indicator_id`
         )
