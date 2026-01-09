@@ -1,11 +1,11 @@
 const {pool} = require('./conn')
 
-async function checkuser(gmail) {
+async function checkuser(email) {
     let conn = await pool.getConnection()
     try{
         const row = await conn.query(
-            'SELECT gmail FROM users WHERE gmail = ?',
-            [gmail]
+            'SELECT email FROM users WHERE gmail = ?',
+            [email]
         )
         return row[0] || null
     }catch(e){
