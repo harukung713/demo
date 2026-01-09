@@ -31,9 +31,9 @@ exports.insertindicator = async (req,res) => {
 
 exports.insertform = async (req,res) => {
     const {id} = req.params
-    const {detail,in_id} = req.body
+    const {form,in_id} = req.body
     try{
-        const row = await form.insertform(detail,in_id,id)
+        const row = await form.insertform(form,in_id,id)
         if(!row) return res.status(400).json({message: "error insert"})
         res.status(200).json({message: "insert success"})
     }catch(e){
