@@ -29,11 +29,11 @@ exports.register = async (req,res) => {
 }
 
 exports.login = async (req,res) => {
-    const {gmail,password} = req.body
+    const {email,password} = req.body
     try{
-        const check = await User.checkuser(gmail)
-        if(!check) return res.status(400).json({message: "gmail not exsist"})
-        const result = await User.login(gmail,password)
+        const check = await User.checkuser(email)
+        if(!check) return res.status(400).json({message: "email not exsist"})
+        const result = await User.login(email,password)
         if(!result) return res.status(400).json({message: "login failed"})
         const token = await jsign.tokensign(result.user_id,result.username,result.role)
         res.status(200).json({message: "login success", token: token})
